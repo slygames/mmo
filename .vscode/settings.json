@@ -1,0 +1,11 @@
+{
+  // Import paths for IntelliSense and diagnostics (recommended)
+  "protobuf.includes": [
+    "${workspaceFolder}/protos"
+    //"c:/Users/Admin/AppData/Local/protoc-33.4-win64/bin"
+  ],
+  // Protoc compilation settings
+  "protobuf.protoc.path": "protoc",
+  "protobuf.protoc.compileOnSave" : true,
+  "protobuf.protoc.options": ["--proto_path=${workspaceFolder}/shared", "--go_out=${workspaceFolder}/server"]
+}
