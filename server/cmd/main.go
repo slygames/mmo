@@ -6,16 +6,13 @@ import (
 )
 
 func main() {
-	//fmt.Println("Hello World!")
 
 	packet := &packets.Packet{
 		SenderId: 69,
-		Msg: &packets.Packet_Chat{
-			Chat: &packets.ChatMessage{
-				Msg: "Hello World!",
-			},
-		},
+		Msg:      packets.NewId(54),
 	}
 
 	fmt.Println(packet)
+
+	//fmt.Println("Hello World!")
 }
