@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://d2vh1w2as1v4v"]
+
+[ext_resource type="Script" uid="uid://dfv8g7qy5qhl1" path="res://lib/states/ingame/ingame.gd" id="1_1ptq5"]
+[ext_resource type="Script" uid="uid://cdodaubet2s4f" path="res://lib/ui/log/log.gd" id="1_pco70"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ptq5"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.16924527, 0.16924533, 0.16924518, 0.23529412)
+
+[node name="Ingame" type="Node" unique_id=591360233]
+script = ExtResource("1_1ptq5")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=882076551]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -235.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1255511311]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=311250397]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1ptq5")
+
+[node name="Log" type="RichTextLabel" parent="MarginContainer/VBoxContainer/PanelContainer" unique_id=213435211]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+bbcode_enabled = true
+scroll_following = true
+script = ExtResource("1_pco70")
+metadata/_custom_type_script = "uid://cdodaubet2s4f"
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer" unique_id=1355098604]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="." unique_id=1506213880]
+offset_right = 140.0
+offset_bottom = 89.0
+text = "INGAME"

@@ -1,5 +1,7 @@
 extends Node
 
+#todo: this chat script should only have the ui elements and handlers and hte rest should be in websockets/client.gd
+
 const packets := preload("res://lib/packets/packets.gd")
 
 var socket := WebSocketPeer.new()
