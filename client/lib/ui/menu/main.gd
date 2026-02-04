@@ -1,13 +1,16 @@
-extends Node
+extends Control
+class_name Main
 
 const packets := preload("res://lib/packets/packets.gd")
+
+@onready var _log: Log = $Log
 
 func _ready() -> void:
 	WS.connected_to_server.connect(_on_ws_connected_to_server)
 	WS.connection_closed.connect(_on_ws_connection_closed)
 	WS.packet_received.connect(_on_ws_packet_received)
 	
-	print("Connecting to server...")
+	_log.info("Connecting to server...")
 	WS.connect_to_url("ws://127.0.0.1:8080/ws")
 
 func _on_ws_connected_to_server() -> void:
@@ -17,12 +20,12 @@ func _on_ws_connected_to_server() -> void:
 	
 	var err := WS.send(packet)
 	if err:
-		print("Error sending packet")
+		_log.error("Error sending packet")
 	else:
-		print("Sent packet")
+		_log.success("Sent packet")
 	
 func _on_ws_connection_closed() -> void:
-	print("Connection closed")
+	_log.info("Connection closed")
 	
 func _on_ws_packet_received(packet: packets.Packet) -> void:
-	print("Received packet from the server: %s" % packet)
+	_log.info("Received packet from the server: %s" % packet)

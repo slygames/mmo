@@ -3,6 +3,7 @@ package server
 import (
 	"log"
 	"net/http"
+	"server/internal/server/objects"
 	"server/pkg/packets"
 )
 
@@ -37,7 +38,7 @@ type ClientInterfacer interface {
 
 // The hub is the central point of communication between all connected clients
 type Hub struct {
-	Clients map[uint64]ClientInterfacer
+	Clients *objects.SharedCollection[ClientInterfacer]
 
 	// Packets in this channel will be processed by all connected clients except the sender
 	BroadcastChan chan *packets.Packet
@@ -51,7 +52,7 @@ type Hub struct {
 
 func NewHub() *Hub {
 	return &Hub{
-		Clients:        make(map[uint64]ClientInterfacer),
+		Clients:        objects.NewSharedCollection[ClientInterfacer](),
 		BroadcastChan:  make(chan *packets.Packet),
 		RegisterChan:   make(chan ClientInterfacer),
 		UnregisterChan: make(chan ClientInterfacer),
@@ -63,15 +64,15 @@ func (h *Hub) Run() {
 	for {
 		select {
 		case client := <-h.RegisterChan:
-			client.Initialize(h.createId()()) // register / initialize client with new id
+			client.Initialize(h.Clients.Add(client)) // register / initialize client with new id
 		case client := <-h.UnregisterChan:
-			delete(h.Clients, client.Id()) // unregister / delete client from clients map
+			h.Clients.Remove(client.Id()) // unregister / delete client from clients map
 		case packet := <-h.BroadcastChan: // broadcast / message to all other clients
-			for id, client := range h.Clients {
-				if id != packet.SenderId {
+			h.Clients.ForEach(func(clientId uint64, client ClientInterfacer) {
+				if clientId != packet.SenderId {
 					client.ProcessMessage(packet.SenderId, packet.Msg)
 				}
-			}
+			})
 		}
 	}
 }
@@ -91,6 +92,7 @@ func (h *Hub) Serve(getNewClient func(*Hub, http.ResponseWriter, *http.Request) 
 	go client.ReadPump()
 }
 
+/*
 func (h *Hub) createId() func() uint64 {
 	var next_id uint64 = 0 // This 'counter' is private to the returned function
 	return func() uint64 {
@@ -98,3 +100,4 @@ func (h *Hub) createId() func() uint64 {
 		return next_id
 	}
 }
+*/
