@@ -23,8 +23,7 @@ func NewWebSocketClient(hub *server.Hub, writer http.ResponseWriter, request *ht
 	upgrader := websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
-		//todo: can put custom logic here to filter return false if banned ip or something like this (or there's probaly better ways to do this, like?!)
-		CheckOrigin: func(_ *http.Request) bool { return true },
+		CheckOrigin:     func(_ *http.Request) bool { return true },
 	}
 
 	conn, err := upgrader.Upgrade(writer, request, nil)
@@ -48,13 +47,21 @@ func (c *WebSocketClient) Id() uint64 {
 }
 
 func (c *WebSocketClient) ProcessMessage(senderId uint64, message packets.Msg) {
-	c.logger.Printf("Received message: %T from client - echoing back...", message)
-	c.SocketSend(message)
+	if senderId == c.id {
+		// This message was sent by our own client, so broadcast it to everyone else
+		c.Broadcast(message)
+	} else {
+		// Another client interfacer passed this onto us, or it was broadcast from the hub,
+		// so forward it to our own client
+		c.SocketSendAs(message, senderId)
+	}
 }
 
 func (c *WebSocketClient) Initialize(id uint64) {
 	c.id = id
 	c.logger.SetPrefix(fmt.Sprintf("Client %d: ", c.id))
+	c.SocketSend(packets.NewId(c.id))
+	c.logger.Printf("Sent ID to client")
 }
 
 func (c *WebSocketClient) SocketSend(message packets.Msg) {
@@ -86,7 +93,6 @@ func (c *WebSocketClient) ReadPump() {
 	}()
 
 	for {
-		// read message
 		_, data, err := c.conn.ReadMessage()
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
@@ -94,7 +100,7 @@ func (c *WebSocketClient) ReadPump() {
 			}
 			break
 		}
-		// unmarshal data (from_bytes)
+
 		packet := &packets.Packet{}
 		err = proto.Unmarshal(data, packet)
 		if err != nil {
@@ -107,7 +113,6 @@ func (c *WebSocketClient) ReadPump() {
 			packet.SenderId = c.id
 		}
 
-		// process message
 		c.ProcessMessage(packet.SenderId, packet.Msg)
 	}
 }
@@ -118,33 +123,27 @@ func (c *WebSocketClient) WritePump() {
 		c.Close("write pump closed")
 	}()
 
-	// loop through send channels
 	for packet := range c.sendChan {
-		// create writer
 		writer, err := c.conn.NextWriter(websocket.BinaryMessage)
 		if err != nil {
 			c.logger.Printf("error getting writer for %T packet, closing client: %v", packet.Msg, err)
 			return
 		}
 
-		// marshal data (to bytes)
 		data, err := proto.Marshal(packet)
 		if err != nil {
 			c.logger.Printf("error marshalling %T packet, closing client: %v", packet.Msg, err)
 			continue
 		}
 
-		// write data
 		_, err = writer.Write(data)
 		if err != nil {
 			c.logger.Printf("error writing %T packet: %v", packet.Msg, err)
 			continue
 		}
 
-		// flush writer with newline (prevents packets sticking if sending multiple packets in rapid succession)
 		writer.Write([]byte{'\n'})
 
-		// close writer
 		if err = writer.Close(); err != nil {
 			c.logger.Printf("error closing writer for %T packet: %v", packet.Msg, err)
 			continue
