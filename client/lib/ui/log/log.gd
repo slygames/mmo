@@ -1,6 +1,11 @@
 extends RichTextLabel
 class_name Log
 
+func _init():
+	bbcode_enabled = true
+	scroll_active = true
+	scroll_following = true
+	
 func _message(message: String, color: Color = Color.WHITE):
 	append_text("[color=#%s]%s[/color]\n" % [color.to_html(false), message])
 

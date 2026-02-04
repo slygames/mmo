@@ -2,11 +2,13 @@ extends Node
 
 enum State {
 	ENTERED,
+	CONNECTED,
 	INGAME,
 }
 
 var _states_scenes: Dictionary[State, String] = {
 	State.ENTERED: "res://lib/states/entered/entered.tscn",
+	State.CONNECTED: "res://lib/states/connected/connected.tscn",
 	State.INGAME: "res://lib/states/ingame/ingame.tscn",
 }
 

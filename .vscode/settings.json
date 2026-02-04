@@ -1,20 +1,20 @@
 {
-  "protoc": {
-  // Import paths for IntelliSense and diagnostics (recommended)
-  "protobuf.includes": [
-    "${workspaceFolder}/protos"
-  ],
-  // Protoc compilation settings
-  "protobuf.protoc.path": "protoc",
-  "protobuf.protoc.compileOnSave" : true,
-  "protobuf.protoc.options": ["--proto_path=${workspaceFolder}/shared", "--go_out=${workspaceFolder}/server"]
-},
-
-  "[go]": {
+    // Import paths for IntelliSense and diagnostics (recommended)
+    "protobuf.includes": [
+        "${workspaceFolder}/protos"
+    ],
+    // Protoc compilation settings
+    "protobuf.protoc.path": "protoc",
+    "protobuf.protoc.compileOnSave": true,
+    "protobuf.protoc.options": [
+        "--proto_path=${workspaceFolder}/shared",
+        "--go_out=${workspaceFolder}/server"
+    ],
+    "[go]": {
         "editor.defaultFormatter": "golang.go",
-        "editor.formatOnSave":true,
+        "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.organizeImports":"never"
+            "source.organizeImports": "never"
         }
-  },
+    }
 }
