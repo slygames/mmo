@@ -14,10 +14,13 @@ bg_color = Color(0.16924527, 0.16924533, 0.16924518, 0.23529412)
 script = ExtResource("1_y6em7")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1836080217]
-offset_left = 50.0
-offset_top = 463.0
-offset_right = 1102.0
-offset_bottom = 503.0
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -140.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_y6em7")
 
 [node name="Log" type="RichTextLabel" parent="PanelContainer" unique_id=1681220716]

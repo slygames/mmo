@@ -7,6 +7,7 @@ import (
 	"log"
 	"server/internal/server"
 	"server/internal/server/db"
+	"server/internal/server/objects"
 	"server/pkg/packets"
 	"strings"
 
@@ -50,7 +51,7 @@ func (c *Connected) OnExit() {
 
 func (c *Connected) handleLoginRequest(senderId uint64, message *packets.Packet_LoginRequest) {
 	if senderId != c.client.Id() {
-		c.logger.Printf("Received login message from another client (Id %d)", senderId)
+		c.logger.Printf("Received login request from another client (Id %d)", senderId)
 		return
 	}
 
@@ -60,30 +61,37 @@ func (c *Connected) handleLoginRequest(senderId uint64, message *packets.Packet_
 
 	user, err := c.queries.GetUserByUsername(c.dbCtx, strings.ToLower(username))
 	if err != nil {
-		c.logger.Printf("Error getting user %s: %v", username, err)
+		c.logger.Printf("Error getting user by username: %v", err)
 		c.client.SocketSend(genericFailMessage)
 		return
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(message.LoginRequest.Password))
 	if err != nil {
-		c.logger.Printf("User entered wrong password: %s", username)
+		c.logger.Printf("Incorrect password for user %s", username)
 		c.client.SocketSend(genericFailMessage)
 		return
 	}
 
-	c.logger.Printf("User %s logged in successfully", username)
+	c.logger.Printf("User %s logged in successfully!", username)
 	c.client.SocketSend(packets.NewOkResponse())
+
+	c.client.SetState(&InGame{
+		player: &objects.Player{
+			Name: username,
+		},
+	})
 }
 
 func (c *Connected) handleRegisterRequest(senderId uint64, message *packets.Packet_RegisterRequest) {
 	if senderId != c.client.Id() {
-		c.logger.Printf("Received register message from another client (Id %d)", senderId)
+		c.logger.Printf("Received register request from another client (Id %d)", senderId)
 		return
 	}
 
-	username := strings.ToLower(message.RegisterRequest.Username)
-	err := validateUsername(message.RegisterRequest.Username)
+	username := message.RegisterRequest.Username
+	err := validateUsername(username)
+
 	if err != nil {
 		reason := fmt.Sprintf("Invalid username: %v", err)
 		c.logger.Println(reason)
@@ -91,37 +99,35 @@ func (c *Connected) handleRegisterRequest(senderId uint64, message *packets.Pack
 		return
 	}
 
-	_, err = c.queries.GetUserByUsername(c.dbCtx, username)
-	if err == nil {
-		c.logger.Printf("User already exists: %s", username)
+	if _, err := c.queries.GetUserByUsername(c.dbCtx, strings.ToLower(username)); err == nil {
+		c.logger.Printf("User already exists: %v", err)
 		c.client.SocketSend(packets.NewDenyResponse("User already exists"))
 		return
 	}
 
-	genericFailMessage := packets.NewDenyResponse("Error registering user (internal server error) - please try again later")
+	genericFailMessage := packets.NewDenyResponse("Failed to register user (internal server error) - please try again later")
 
 	// Add new user
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(message.RegisterRequest.Password), bcrypt.DefaultCost)
 	if err != nil {
-		c.logger.Printf("Failed to hash password: %s", username)
+		c.logger.Printf("Failed to hash password: %v", err)
 		c.client.SocketSend(genericFailMessage)
 		return
 	}
 
 	_, err = c.queries.CreateUser(c.dbCtx, db.CreateUserParams{
-		Username:     username,
+		Username:     strings.ToLower(username),
 		PasswordHash: string(passwordHash),
 	})
 
 	if err != nil {
-		c.logger.Printf("Failed to create user %s: %v", username, err)
+		c.logger.Printf("Failed to create user: %v", err)
 		c.client.SocketSend(genericFailMessage)
 		return
 	}
 
+	c.logger.Printf("User %s registered successfully!", username)
 	c.client.SocketSend(packets.NewOkResponse())
-
-	c.logger.Printf("User %s registered successfully", username)
 }
 
 func validateUsername(username string) error {

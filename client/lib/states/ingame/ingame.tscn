@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dfv8g7qy5qhl1" path="res://lib/states/ingame/ingame.gd" id="1_1ptq5"]
 [ext_resource type="Script" uid="uid://cdodaubet2s4f" path="res://lib/ui/log/log.gd" id="1_pco70"]
+[ext_resource type="Texture2D" uid="uid://bmouwhh5v7ocf" path="res://lib/texture/floor.svg" id="3_wf2wh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ptq5"]
 content_margin_left = 20.0
@@ -14,13 +15,11 @@ bg_color = Color(0.16924527, 0.16924533, 0.16924518, 0.23529412)
 script = ExtResource("1_1ptq5")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=882076551]
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -235.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
@@ -48,3 +47,11 @@ layout_mode = 2
 offset_right = 140.0
 offset_bottom = 89.0
 text = "INGAME"
+
+[node name="World" type="Node2D" parent="." unique_id=1909129650]
+
+[node name="Sprite2D" type="Sprite2D" parent="World" unique_id=351216004]
+texture_repeat = 2
+texture = ExtResource("3_wf2wh")
+region_enabled = true
+region_rect = Rect2(0, 0, 10000, 10000)

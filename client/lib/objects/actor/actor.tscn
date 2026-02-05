@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://beenkpjyjrwlh"]
+
+[ext_resource type="Script" uid="uid://ckv15wtwd1o8i" path="res://lib/objects/actor/actor.gd" id="1_384xv"]
+[ext_resource type="Texture2D" uid="uid://36jrcyjxuor5" path="res://lib/texture/ExamplePlayerSprite.png" id="1_vjby1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4rrjj"]
+resource_local_to_scene = true
+
+[node name="Actor" type="Area2D" unique_id=311602585]
+script = ExtResource("1_384xv")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=377330526]
+visible = false
+texture = ExtResource("1_vjby1")
+hframes = 21
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1474309316]
+shape = SubResource("CircleShape2D_4rrjj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=284625007]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1992524760]
+
+[node name="Nameplate" type="Label" parent="." unique_id=375689089]
+offset_left = -20.0
+offset_top = -11.0
+offset_right = 20.0
+offset_bottom = 12.0
