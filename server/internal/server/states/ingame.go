@@ -37,7 +37,6 @@ func (g *InGame) OnEnter() {
 	g.player.X = rand.Float64() * 1000
 	g.player.Y = rand.Float64() * 1000
 	g.player.Speed = 150.0
-	g.player.Radius = 20.0
 
 	// Send the player's initial state to the client
 	g.client.SocketSend(packets.NewPlayer(g.client.Id(), g.player))

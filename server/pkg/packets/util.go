@@ -41,7 +41,6 @@ func NewPlayer(id uint64, player *objects.Player) Msg {
 			Name:      player.Name,
 			X:         player.X,
 			Y:         player.Y,
-			Radius:    player.Radius,
 			Direction: player.Direction,
 			Speed:     player.Speed,
 		},

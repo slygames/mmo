@@ -14,10 +14,10 @@ var speed: float
 var is_player: bool
 
 var velocity: Vector2
-var radius: float
+#var radius: float
 
 @onready var _nameplate: Label = $Nameplate
-@onready var _collision_shape: CircleShape2D = $CollisionShape2D.shape
+#@onready var _collision_shape: CircleShape2D = $CollisionShape2D.shape
 @onready var _camera: Camera2D = $Camera2D
 
 static func instatiate(actor_id: int, actor_name: String, x: float, y: float, rad: float, speed: float, is_player: bool) -> Actor:
@@ -37,9 +37,9 @@ func _ready():
 	position.y = start_y
 	
 	velocity = Vector2.RIGHT * speed
-	radius = start_rad
+#	radius = start_rad
 	
-	_collision_shape.radius = radius
+#	_collision_shape.radius = radius
 	_nameplate.text = actor_name
 	
 func _physics_process(delta: float) -> void:
@@ -68,5 +68,5 @@ func _input(event: InputEvent) -> void:
 				_camera.zoom.x = max(0.1, _camera.zoom.x - 0.1)
 		_camera.zoom.y = _camera.zoom.x
 	
-func _draw() -> void:
-	draw_circle(Vector2.ZERO, _collision_shape.radius, Color.DARK_ORCHID)
+#func _draw() -> void:
+#	draw_circle(Vector2.ZERO, _collision_shape.radius, Color.DARK_ORCHID)
