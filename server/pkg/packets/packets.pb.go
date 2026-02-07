@@ -299,9 +299,8 @@ type PlayerMessage struct {
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	X             float64                `protobuf:"fixed64,3,opt,name=x,proto3" json:"x,omitempty"`
 	Y             float64                `protobuf:"fixed64,4,opt,name=y,proto3" json:"y,omitempty"`
-	Radius        float64                `protobuf:"fixed64,5,opt,name=radius,proto3" json:"radius,omitempty"`
-	Direction     float64                `protobuf:"fixed64,6,opt,name=direction,proto3" json:"direction,omitempty"`
-	Speed         float64                `protobuf:"fixed64,7,opt,name=speed,proto3" json:"speed,omitempty"`
+	Direction     float64                `protobuf:"fixed64,5,opt,name=direction,proto3" json:"direction,omitempty"`
+	Speed         float64                `protobuf:"fixed64,6,opt,name=speed,proto3" json:"speed,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -360,13 +359,6 @@ func (x *PlayerMessage) GetX() float64 {
 func (x *PlayerMessage) GetY() float64 {
 	if x != nil {
 		return x.Y
-	}
-	return 0
-}
-
-func (x *PlayerMessage) GetRadius() float64 {
-	if x != nil {
-		return x.Radius
 	}
 	return 0
 }
@@ -632,15 +624,14 @@ const file_packets_proto_rawDesc = "" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\"\x13\n" +
 	"\x11OkResponseMessage\"-\n" +
 	"\x13DenyResponseMessage\x12\x16\n" +
-	"\x06reason\x18\x01 \x01(\tR\x06reason\"\x9b\x01\n" +
+	"\x06reason\x18\x01 \x01(\tR\x06reason\"\x83\x01\n" +
 	"\rPlayerMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\f\n" +
 	"\x01x\x18\x03 \x01(\x01R\x01x\x12\f\n" +
-	"\x01y\x18\x04 \x01(\x01R\x01y\x12\x16\n" +
-	"\x06radius\x18\x05 \x01(\x01R\x06radius\x12\x1c\n" +
-	"\tdirection\x18\x06 \x01(\x01R\tdirection\x12\x14\n" +
-	"\x05speed\x18\a \x01(\x01R\x05speed\"6\n" +
+	"\x01y\x18\x04 \x01(\x01R\x01y\x12\x1c\n" +
+	"\tdirection\x18\x05 \x01(\x01R\tdirection\x12\x14\n" +
+	"\x05speed\x18\x06 \x01(\x01R\x05speed\"6\n" +
 	"\x16PlayerDirectionMessage\x12\x1c\n" +
 	"\tdirection\x18\x01 \x01(\x01R\tdirection\"\x95\x04\n" +
 	"\x06Packet\x12\x1b\n" +

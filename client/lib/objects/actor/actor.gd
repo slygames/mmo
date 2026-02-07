@@ -70,3 +70,6 @@ func _input(event: InputEvent) -> void:
 	
 #func _draw() -> void:
 #	draw_circle(Vector2.ZERO, _collision_shape.radius, Color.DARK_ORCHID)
+
+func _tool_use_emit():
+	print('_tool_use_emit()')

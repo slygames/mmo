@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ckv15wtwd1o8i" path="res://lib/objects/actor/actor.gd" id="1_384xv"]
 [ext_resource type="Texture2D" uid="uid://cm11ko4gimoes" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/1. Idle/Skins/1.png" id="2_82e3x"]
+[ext_resource type="Script" uid="uid://b6s515rr8ub3w" path="res://lib/objects/actor/body.gd" id="2_edo76"]
 [ext_resource type="Texture2D" uid="uid://bs5f037rrfau3" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/1. Idle/Clothers/Farm/Blue.png" id="3_edo76"]
 [ext_resource type="Texture2D" uid="uid://dw2sgm2obgt6n" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/1. Idle/Hair's/Fawn/Black.png" id="4_qg8we"]
 [ext_resource type="Texture2D" uid="uid://dsjrvj4rh4eib" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/1. Idle/Eyes/Female/Black.png" id="5_p601y"]
@@ -11,13 +12,49 @@
 radius = 5.0
 height = 20.0
 
+[sub_resource type="Animation" id="Animation_edo76"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qg8we"]
+resource_name = "idle_down"
+length = 1.2
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p601y"]
+_data = {
+&"RESET": SubResource("Animation_edo76"),
+&"idle_down": SubResource("Animation_qg8we")
+}
+
 [node name="Actor" type="Area2D" unique_id=311602585]
 script = ExtResource("1_384xv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1474309316]
 shape = SubResource("CapsuleShape2D_82e3x")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=284625007]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1992524760]
 
@@ -27,26 +64,31 @@ offset_top = -11.0
 offset_right = 20.0
 offset_bottom = 12.0
 
-[node name="Sprites" type="Node2D" parent="." unique_id=1991859918]
+[node name="Body" type="Node2D" parent="." unique_id=1991859918]
 position = Vector2(-0.5, 0)
+script = ExtResource("2_edo76")
 metadata/_edit_group_ = true
 
-[node name="Skin" type="Sprite2D" parent="Sprites" unique_id=377330526]
+[node name="Skin" type="Sprite2D" parent="Body" unique_id=377330526]
 texture = ExtResource("2_82e3x")
 hframes = 16
 
-[node name="Clothes" type="Sprite2D" parent="Sprites" unique_id=312665822]
+[node name="Clothes" type="Sprite2D" parent="Body" unique_id=312665822]
 texture = ExtResource("3_edo76")
 hframes = 16
 
-[node name="Hair" type="Sprite2D" parent="Sprites" unique_id=9321743]
+[node name="Hair" type="Sprite2D" parent="Body" unique_id=9321743]
 texture = ExtResource("4_qg8we")
 hframes = 16
 
-[node name="Eyes" type="Sprite2D" parent="Sprites" unique_id=284812491]
+[node name="Eyes" type="Sprite2D" parent="Body" unique_id=284812491]
 texture = ExtResource("5_p601y")
 hframes = 16
 
-[node name="Hat" type="Sprite2D" parent="Sprites" unique_id=1308218229]
+[node name="Hat" type="Sprite2D" parent="Body" unique_id=1308218229]
 texture = ExtResource("6_y35pg")
 hframes = 16
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=284625007]
+libraries/ = SubResource("AnimationLibrary_p601y")
+autoplay = &"idle_down"

@@ -32,13 +32,8 @@ texture = ExtResource("2_twd0h")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=348514508]
 custom_minimum_size = Vector2(450, 0)
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -102.5
 offset_right = 450.0
-offset_bottom = 102.5
-grow_vertical = 2
+offset_bottom = 205.0
 size_flags_horizontal = 4
 
 [node name="Username" type="LineEdit" parent="UI/VBoxContainer" unique_id=1566712504]
@@ -72,7 +67,6 @@ script = ExtResource("2_nwwtd")
 metadata/_custom_type_script = "uid://cdodaubet2s4f"
 
 [node name="Actor" parent="." unique_id=112073218 instance=ExtResource("4_2ri0j")]
-position = Vector2(157, 160)
 
 [node name="CollisionShape2D" parent="Actor" index="0" unique_id=1474309316]
 shape = SubResource("CircleShape2D_2ri0j")

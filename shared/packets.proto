@@ -9,7 +9,7 @@ message LoginRequestMessage { string username = 1; string password = 2; }
 message RegisterRequestMessage { string username = 1; string password = 2; }
 message OkResponseMessage { }
 message DenyResponseMessage { string reason = 1; }
-message PlayerMessage { uint64 id = 1; string name = 2; double x = 3; double y = 4; double radius = 5; double direction = 6; double speed = 7; }
+message PlayerMessage { uint64 id = 1; string name = 2; double x = 3; double y = 4; double direction = 5; double speed = 6; }
 message PlayerDirectionMessage { double direction = 1; }
 
 message Packet {
