@@ -1,32 +1,28 @@
-extends Area2D
+extends CharacterBody2D
+#class_name Actor
 
 const packets := preload("res://lib/packets/packets.gd")
 
-const Scene := preload("res://lib/objects/actor/actor.tscn")
+#const Scene := preload("res://lib/objects/actor/actor.tscn")
 const Actor := preload("res://lib/objects/actor/actor.gd")
+
+#const Body := preload("res://lib/objects/actor/body.tscn")
 
 var actor_id: int
 var actor_name: String
 var start_x: float
 var start_y: float
-var start_rad: float
 var speed: float
 var is_player: bool
 
-var velocity: Vector2
-#var radius: float
-
-@onready var _nameplate: Label = $Nameplate
-#@onready var _collision_shape: CircleShape2D = $CollisionShape2D.shape
-@onready var _camera: Camera2D = $Camera2D
-
-static func instatiate(actor_id: int, actor_name: String, x: float, y: float, rad: float, speed: float, is_player: bool) -> Actor:
-	var actor := Scene.instantiate()
+static func instantiate(actor_id: int, actor_name: String, x: float, y: float, speed: float, is_player: bool) -> Actor:
+	#var actor := Scene.instantiate()
+	var actor := Actor.new()
 	actor.actor_id = actor_id
 	actor.actor_name = actor_name
 	actor.start_x = x
 	actor.start_y = y
-	actor.start_rad = rad
+	#actor.start_rad = rad
 	actor.speed = speed
 	actor.is_player = is_player
 	
@@ -37,10 +33,7 @@ func _ready():
 	position.y = start_y
 	
 	velocity = Vector2.RIGHT * speed
-#	radius = start_rad
 	
-#	_collision_shape.radius = radius
-	_nameplate.text = actor_name
 	
 func _physics_process(delta: float) -> void:
 	position += velocity * delta
@@ -58,15 +51,6 @@ func _physics_process(delta: float) -> void:
 		var player_direction_msg := packet.new_player_direction()
 		player_direction_msg.set_direction(velocity.angle())
 		WS.send(packet)
-		
-func _input(event: InputEvent) -> void:
-	if is_player and event is InputEventMouseButton and event.is_pressed():
-		match event.button_index:
-			MOUSE_BUTTON_WHEEL_UP:
-				_camera.zoom.x = min(4, _camera.zoom.x + 0.1)
-			MOUSE_BUTTON_WHEEL_DOWN:
-				_camera.zoom.x = max(0.1, _camera.zoom.x - 0.1)
-		_camera.zoom.y = _camera.zoom.x
 	
 #func _draw() -> void:
 #	draw_circle(Vector2.ZERO, _collision_shape.radius, Color.DARK_ORCHID)

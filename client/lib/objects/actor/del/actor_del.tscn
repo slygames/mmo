@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://bncq4u3fhtatp"]
+
+[ext_resource type="Script" uid="uid://ckv15wtwd1o8i" path="res://lib/objects/actor/actor.gd" id="1_52vgp"]
+[ext_resource type="Script" uid="uid://dqf6eanl5ttah" path="res://lib/objects/actor/del/body.gd" id="2_gw4r0"]
+[ext_resource type="Texture2D" uid="uid://dul7akq3238iw" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/9. Archer/Skins/1.png" id="3_obp4f"]
+[ext_resource type="Texture2D" uid="uid://dsjrvj4rh4eib" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/1. Idle/Eyes/Female/Black.png" id="4_fjpx6"]
+[ext_resource type="Texture2D" uid="uid://73vwn81fmfa1" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/9. Archer/Hair's/Fawn/Black.png" id="5_pbrcg"]
+[ext_resource type="Texture2D" uid="uid://cj4lbsgokjhof" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/1. Idle/Acc/Elf/1.png" id="6_od7hx"]
+[ext_resource type="Texture2D" uid="uid://mwp015j2l4i6" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/9. Archer/Clothers/Farm/Blue.png" id="7_cjt3d"]
+[ext_resource type="Texture2D" uid="uid://d3yvqsb5sta4t" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/9. Archer/Acc/Pirate.png" id="8_dl63v"]
+[ext_resource type="Texture2D" uid="uid://dsnwrppytvfab" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/9. Archer/Weapons/Bow and Arrow/1.png" id="9_iq23a"]
+[ext_resource type="Texture2D" uid="uid://dfahj0bp52hnf" path="res://thirdparty/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/PNG/9. Archer/Acc/Pirate eye patch.png" id="10_poxrq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_82e3x"]
+radius = 5.0
+height = 20.0
+
+[sub_resource type="Animation" id="Animation_jtu0m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_y35pg"]
+resource_name = "idle_walk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jtu0m"]
+_data = {
+&"RESET": SubResource("Animation_jtu0m"),
+&"idle_walk": SubResource("Animation_y35pg")
+}
+
+[node name="Actor" type="CharacterBody2D" unique_id=1061615711]
+motion_mode = 1
+script = ExtResource("1_52vgp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1474309316]
+shape = SubResource("CapsuleShape2D_82e3x")
+
+[node name="Body" type="Node2D" parent="." unique_id=1991859918]
+position = Vector2(-0.5, 0)
+script = ExtResource("2_gw4r0")
+metadata/_edit_group_ = true
+
+[node name="Skin" type="Sprite2D" parent="Body" unique_id=377330526]
+texture = ExtResource("3_obp4f")
+hframes = 28
+
+[node name="Eyes" type="Sprite2D" parent="Body" unique_id=284812491]
+visible = false
+texture = ExtResource("4_fjpx6")
+hframes = 16
+
+[node name="Hair" type="Sprite2D" parent="Body" unique_id=9321743]
+visible = false
+texture = ExtResource("5_pbrcg")
+hframes = 28
+
+[node name="Elf" type="Sprite2D" parent="Body" unique_id=666512235]
+visible = false
+texture = ExtResource("6_od7hx")
+hframes = 16
+
+[node name="Clothes" type="Sprite2D" parent="Body" unique_id=312665822]
+visible = false
+texture = ExtResource("7_cjt3d")
+hframes = 28
+
+[node name="Hat" type="Sprite2D" parent="Body" unique_id=1246462007]
+visible = false
+texture = ExtResource("8_dl63v")
+hframes = 28
+
+[node name="Weapon" type="Sprite2D" parent="Body" unique_id=2119234673]
+visible = false
+texture = ExtResource("9_iq23a")
+hframes = 28
+vframes = 10
+
+[node name="Accessory" type="Sprite2D" parent="Body" unique_id=1308218229]
+visible = false
+texture = ExtResource("10_poxrq")
+hframes = 28
+
+[node name="Projectile" type="Sprite2D" parent="Body" unique_id=1983182953]
+visible = false
+hframes = 28
+
+[node name="Animation" type="Node" parent="." unique_id=1686844942]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Animation" unique_id=140783711]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_jtu0m")

@@ -998,17 +998,12 @@ class PlayerMessage:
 		service.field = __y
 		data[__y.tag] = service
 		
-		__radius = PBField.new("radius", PB_DATA_TYPE.DOUBLE, PB_RULE.OPTIONAL, 5, true, DEFAULT_VALUES_3[PB_DATA_TYPE.DOUBLE])
-		service = PBServiceField.new()
-		service.field = __radius
-		data[__radius.tag] = service
-		
-		__direction = PBField.new("direction", PB_DATA_TYPE.DOUBLE, PB_RULE.OPTIONAL, 6, true, DEFAULT_VALUES_3[PB_DATA_TYPE.DOUBLE])
+		__direction = PBField.new("direction", PB_DATA_TYPE.DOUBLE, PB_RULE.OPTIONAL, 5, true, DEFAULT_VALUES_3[PB_DATA_TYPE.DOUBLE])
 		service = PBServiceField.new()
 		service.field = __direction
 		data[__direction.tag] = service
 		
-		__speed = PBField.new("speed", PB_DATA_TYPE.DOUBLE, PB_RULE.OPTIONAL, 7, true, DEFAULT_VALUES_3[PB_DATA_TYPE.DOUBLE])
+		__speed = PBField.new("speed", PB_DATA_TYPE.DOUBLE, PB_RULE.OPTIONAL, 6, true, DEFAULT_VALUES_3[PB_DATA_TYPE.DOUBLE])
 		service = PBServiceField.new()
 		service.field = __speed
 		data[__speed.tag] = service
@@ -1067,19 +1062,6 @@ class PlayerMessage:
 	func set_y(value : float) -> void:
 		__y.value = value
 	
-	var __radius: PBField
-	func has_radius() -> bool:
-		if __radius.value != null:
-			return true
-		return false
-	func get_radius() -> float:
-		return __radius.value
-	func clear_radius() -> void:
-		data[5].state = PB_SERVICE_STATE.UNFILLED
-		__radius.value = DEFAULT_VALUES_3[PB_DATA_TYPE.DOUBLE]
-	func set_radius(value : float) -> void:
-		__radius.value = value
-	
 	var __direction: PBField
 	func has_direction() -> bool:
 		if __direction.value != null:
@@ -1088,7 +1070,7 @@ class PlayerMessage:
 	func get_direction() -> float:
 		return __direction.value
 	func clear_direction() -> void:
-		data[6].state = PB_SERVICE_STATE.UNFILLED
+		data[5].state = PB_SERVICE_STATE.UNFILLED
 		__direction.value = DEFAULT_VALUES_3[PB_DATA_TYPE.DOUBLE]
 	func set_direction(value : float) -> void:
 		__direction.value = value
@@ -1101,7 +1083,7 @@ class PlayerMessage:
 	func get_speed() -> float:
 		return __speed.value
 	func clear_speed() -> void:
-		data[7].state = PB_SERVICE_STATE.UNFILLED
+		data[6].state = PB_SERVICE_STATE.UNFILLED
 		__speed.value = DEFAULT_VALUES_3[PB_DATA_TYPE.DOUBLE]
 	func set_speed(value : float) -> void:
 		__speed.value = value

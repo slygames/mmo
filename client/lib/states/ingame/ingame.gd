@@ -46,14 +46,16 @@ func _handle_player_msg(sender_id: int, player_msg: packets.PlayerMessage) -> vo
 	var actor_name := player_msg.get_name()
 	var x := player_msg.get_x()
 	var y := player_msg.get_y()
-	var radius := player_msg.get_radius()
+	
+	#var radius := player_msg.get_radius()
+	
 	var speed := player_msg.get_speed()
 	
 	var is_player := actor_id == GameManager.client_id
 	
 	if actor_id not in _players:
 		# This is a new player, so we need to create a new actor
-		var actor := Actor.instatiate(actor_id, actor_name, x, y, radius, speed, is_player)
+		var actor := Actor.instantiate(actor_id, actor_name, x, y, speed, is_player)
 		_world.add_child(actor)
 		_players[actor_id] = actor
 	else:

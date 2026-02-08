@@ -3,10 +3,6 @@
 [ext_resource type="Script" uid="uid://dm66w82q0y7td" path="res://lib/states/connected/connected.gd" id="1_oobkn"]
 [ext_resource type="Script" uid="uid://cdodaubet2s4f" path="res://lib/ui/log/log.gd" id="2_nwwtd"]
 [ext_resource type="Texture2D" uid="uid://wylawdfsm2mb" path="res://icon.svg" id="2_twd0h"]
-[ext_resource type="PackedScene" uid="uid://beenkpjyjrwlh" path="res://lib/objects/actor/actor.tscn" id="4_2ri0j"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_2ri0j"]
-resource_local_to_scene = true
 
 [node name="Connected" type="Node" unique_id=702439843]
 script = ExtResource("1_oobkn")
@@ -65,10 +61,3 @@ bbcode_enabled = true
 scroll_following = true
 script = ExtResource("2_nwwtd")
 metadata/_custom_type_script = "uid://cdodaubet2s4f"
-
-[node name="Actor" parent="." unique_id=112073218 instance=ExtResource("4_2ri0j")]
-
-[node name="CollisionShape2D" parent="Actor" index="0" unique_id=1474309316]
-shape = SubResource("CircleShape2D_2ri0j")
-
-[editable path="Actor"]

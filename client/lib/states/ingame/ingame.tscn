@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dfv8g7qy5qhl1" path="res://lib/states/ingame/ingame.gd" id="1_1ptq5"]
 [ext_resource type="Script" uid="uid://cdodaubet2s4f" path="res://lib/ui/log/log.gd" id="1_pco70"]
 [ext_resource type="Texture2D" uid="uid://bmouwhh5v7ocf" path="res://lib/texture/floor.svg" id="3_wf2wh"]
+[ext_resource type="PackedScene" uid="uid://brhe5nd4gylxp" path="res://lib/objects/player/player.tscn" id="4_nojqv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ptq5"]
 content_margin_left = 20.0
@@ -50,8 +51,10 @@ text = "INGAME"
 
 [node name="World" type="Node2D" parent="." unique_id=1909129650]
 
-[node name="Sprite2D" type="Sprite2D" parent="World" unique_id=351216004]
+[node name="Floor" type="Sprite2D" parent="World" unique_id=351216004]
 texture_repeat = 2
 texture = ExtResource("3_wf2wh")
 region_enabled = true
 region_rect = Rect2(0, 0, 10000, 10000)
+
+[node name="Player" parent="World" unique_id=1061615711 instance=ExtResource("4_nojqv")]

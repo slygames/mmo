@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://brhe5nd4gylxp"]
+
+[ext_resource type="PackedScene" uid="uid://beenkpjyjrwlh" path="res://lib/objects/actor/actor.tscn" id="1_k2lon"]
+[ext_resource type="Script" uid="uid://bi07s88piu1tm" path="res://lib/objects/player/player.gd" id="2_28hyf"]
+
+[node name="Actor" unique_id=1061615711 instance=ExtResource("1_k2lon")]
+script = ExtResource("2_28hyf")
+
+[node name="Player" type="Node" parent="." index="3" unique_id=25128009]
+
+[node name="Camera2D" type="Camera2D" parent="Player" index="0" unique_id=357187794]
+
+[node name="NamePlate" type="Label" parent="Player" index="1" unique_id=1314917541]
+offset_right = 40.0
+offset_bottom = 23.0
